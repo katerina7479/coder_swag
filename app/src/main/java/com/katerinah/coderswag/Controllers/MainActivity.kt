@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         categoryListView.setOnItemClickListener {parent: AdapterView<*>?, view: View?, i: Int, l ->
             val category = DataService.categories[i]
-            Toast.makeText(this, "You clikced on the ${category.title} cell", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "You clicked on the ${category.title} cell", Toast.LENGTH_LONG).show()
         }
     }
 }
