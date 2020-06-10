@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.katerinah.coderswag.Models.Category
 import com.katerinah.coderswag.R
 
-class CategoryRecyclerAdapter(private val context: Context, private val categories: List<Category>) : RecyclerView.Adapter<CategoryRecyclerAdapter.Holder>() {
+class CategoryRecyclerAdapter(private val context: Context, private val categories: List<Category>, val itemClick: (Category) -> Unit) : RecyclerView.Adapter<CategoryRecyclerAdapter.Holder>() {
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bindCategory(categories[position], context)
@@ -19,14 +19,14 @@ class CategoryRecyclerAdapter(private val context: Context, private val categori
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.category_list_item, parent, false)
-        return Holder(view)
+        return Holder(view, itemClick)
     }
 
     override fun getItemCount(): Int {
         return categories.count()
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View, val itemClick: (Category) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val categoryImage: ImageView = itemView.findViewById<ImageView>(R.id.categoryImage)
         private val categoryName: TextView = itemView.findViewById<TextView>(R.id.categoryName)
 
@@ -34,6 +34,7 @@ class CategoryRecyclerAdapter(private val context: Context, private val categori
             val imgResourceId = context.resources.getIdentifier(category.image, "drawable", context.packageName)
             categoryImage.setImageResource(imgResourceId)
             categoryName.text = category.title
+            itemView.setOnClickListener { itemClick(category) }
         }
     }
 }
