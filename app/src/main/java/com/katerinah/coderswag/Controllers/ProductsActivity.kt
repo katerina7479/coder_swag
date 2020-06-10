@@ -1,5 +1,6 @@
 package com.katerinah.coderswag.Controllers
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,8 +24,15 @@ class ProductsActivity : AppCompatActivity() {
         adapter = ProductRecyclerAdapter(this, DataService.getProducts(category))
         productRecyclerView.adapter = adapter
 
-        val layoutManager = GridLayoutManager(this, 2)
+        val largeScreen = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+                || resources.configuration.screenWidthDp > 720
+
+        val spanCount = when(largeScreen){
+            true -> 3
+            else -> 2
+        }
+
+        val layoutManager = GridLayoutManager(this, spanCount)
         productRecyclerView.layoutManager = layoutManager
-        //productRecyclerView.setHasFixedSize(true)
     }
 }
